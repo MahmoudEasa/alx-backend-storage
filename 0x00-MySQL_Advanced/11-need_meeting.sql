@@ -3,4 +3,4 @@
 CREATE VIEW need_meeting AS
 SELECT name FROM students
 WHERE score < 80 &&
-(last_meeting = NULL || DATEDIFF(CURDATE(), last_meeting) > 30);
+(last_meeting IS NULL || DATEDIFF(CURDATE(), last_meeting) > 30);
