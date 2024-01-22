@@ -1,1 +1,2 @@
-#!/usr/bin/env bash
+// script that adds a new attribute to a document in the collection school
+db.school.update({"name": "Holberton school"}, {$set:{"address": "972 Mission street"}})
