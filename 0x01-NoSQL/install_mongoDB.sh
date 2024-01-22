@@ -50,10 +50,9 @@ echo
 echo
 
 # Install PyMongo
-#echo "Install PyMongo"
-#echo
-#pip3 install pymongo
-#echo
-#echo
-
+echo "Install PyMongo"
+echo
+pip3 install pymongo
+echo
+echo
 
