@@ -8,8 +8,9 @@ from pymongo import MongoClient
 def provides_stats():
     """ Provides Stats Function """
     client = MongoClient('mongodb://127.0.0.1:27017')
+
     db = client.logs.nginx
-    x = db.estimated_document_count()
+    x = db.count_documents({})
     get = db.count_documents({'method': 'GET'})
     post = db.count_documents({'method': 'POST'})
     put = db.count_documents({'method': 'PUT'})
