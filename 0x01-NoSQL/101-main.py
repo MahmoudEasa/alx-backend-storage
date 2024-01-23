@@ -7,6 +7,7 @@ top_students = __import__('101-students').top_students
 
 if __name__ == "__main__":
     client = MongoClient('mongodb://127.0.0.1:27017')
+    client.my_db.students.drop()
     students_collection = client.my_db.students
 
     j_students = [
