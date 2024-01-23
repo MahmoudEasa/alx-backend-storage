@@ -5,7 +5,9 @@
 def update_topics(mongo_collection, name, topics):
     """ Update Topics Function """
     try:
-        mongo_collection.update_one({"name": name},
-                                    {"$set": {"topics": topics}})
+        mongo_collection.update_many(
+            {"name": name},
+            {"$set": {"topics": topics}}
+        )
     except Exception as ex:
         print(str(ex))
