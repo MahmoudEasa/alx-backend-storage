@@ -7,7 +7,6 @@ list_all = __import__('8-all').list_all
 def top_students(mongo_collection):
     """ Top Students Function """
     students = list(list_all(mongo_collection))
-    students_len = len(students)
 
     for student in students:
         topics = student.get("topics", None)
