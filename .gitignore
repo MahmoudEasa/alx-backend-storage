@@ -1,3 +1,4 @@
 *.swp
 names.sql
 *.zip
+__pycache__
