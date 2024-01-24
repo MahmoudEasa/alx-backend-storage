@@ -25,3 +25,11 @@ TEST_CASES = {
 for value, fn in TEST_CASES.items():
     key = cache.store(value)
     assert cache.get(key, fn=fn) == value
+
+cache.store(b"first")
+print(cache.get(cache.store.__qualname__))
+
+cache.store(b"second")
+cache.store(b"third")
+print(cache.get(cache.store.__qualname__))
+
