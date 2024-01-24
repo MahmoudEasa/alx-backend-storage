@@ -16,7 +16,15 @@ class Cache:
         self._redis.flushdb()
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """ Store Function """
+        """ Store Method """
         random_key = str(uuid.uuid4())
         self._redis.set(random_key, data)
         return (random_key)
+
+    def get(self, key: str, fn=None):
+        """ Get Method """
+        data = self._redis.get(str(key))
+        if fn:
+            data = fn(data)
+
+        return (data)
