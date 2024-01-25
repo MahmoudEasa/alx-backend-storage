@@ -17,17 +17,20 @@ def cache_count(method: Callable) -> Callable:
     def wrapper(url: str) -> str:
         """ Wrapper Function """
         count_key = f"count:{url}"
-        cached = r.get(count_key)
+        cached_url = f"cached:{url}"
+        cached = r.get(cached_url)
+
+        if cached:
+            r.incr(count_key)
+            return (cached.decode('utf-8'))
 
         try:
             content = method(url)
+            r.setex(cached_url, 10, content)
+            r.incr(count_key)
         except requests.RequestException as e:
             return ("")
 
-        if not cached:
-            r.setex(url, 10, content)
-
-        r.incr(count_key)
         return (content)
 
     return (wrapper)
@@ -41,7 +44,3 @@ def get_page(url: str) -> str:
         return (res)
     except requests.RequestException as e:
         return ("")
-
-
-if __name__ == "__main__":
-    get_page("http://google.com")
