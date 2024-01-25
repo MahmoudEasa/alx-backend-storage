@@ -6,8 +6,10 @@ import requests
 import redis
 from functools import wraps
 from typing import Callable
+import time
 
 r = redis.Redis()
+r.flushdb()
 
 
 def cache_count(method: Callable) -> Callable:
@@ -25,7 +27,7 @@ def cache_count(method: Callable) -> Callable:
 
         content = method(url)
         r.setex(cached_url, 10, content)
-        r.set(count_key, 0)
+        r.set(count_key, 1)
         return (content)
 
     return (wrapper)
@@ -39,3 +41,22 @@ def get_page(url: str) -> str:
         return (res)
     except requests.RequestException as e:
         return ("")
+
+
+if __name__ == "__main__":
+    url = "http://slowwly.robertomurray.co.uk"
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    print(r.get(f"count:{url}"))
+    print(r.get(f"cached:{url}"))
+
+    time.sleep(11)
+    print(r.get(f"count:{url}"))
+    print(r.get(f"cached:{url}"))
