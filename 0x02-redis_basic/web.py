@@ -13,7 +13,7 @@ r.flushdb()
 
 def cache_count(method: Callable) -> Callable:
     """ Cache Count Decorator """
-    @wraps(method, *args, **kwargs)
+    @wraps(method)
     def wrapper(url: str) -> str:
         """ Wrapper Function """
         count_key = f"count:{url}"
@@ -24,7 +24,7 @@ def cache_count(method: Callable) -> Callable:
             r.incr(count_key)
             return (cached.decode('utf-8'))
 
-        content = method(url, *args, **kwargs)
+        content = method(url)
         r.setex(cached_url, 10, content)
         r.set(count_key, 0)
         return (content)
