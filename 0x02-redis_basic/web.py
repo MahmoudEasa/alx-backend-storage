@@ -42,5 +42,6 @@ def get_page(url: str) -> str:
     except requests.RequestException as e:
         return ("")
 
+
 if __name__ == "__main__":
     get_page("http://google.com")
