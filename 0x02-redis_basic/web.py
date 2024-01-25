@@ -14,11 +14,15 @@ r.flushdb()
 def cache_count(method: Callable) -> Callable:
     """ Cache Count Decorator """
     @wraps(method)
-    def wrapper(url: str):
+    def wrapper(url: str) -> str:
         """ Wrapper Function """
         count_key = f"count:{url}"
         cached = r.get(count_key)
-        content = method(url)
+
+        try:
+            content = method(url)
+        except requests.RequestException as e:
+            return ("")
 
         if not cached:
             r.setex(url, 10, content)
@@ -32,5 +36,8 @@ def cache_count(method: Callable) -> Callable:
 @cache_count
 def get_page(url: str) -> str:
     """ Get Page Function """
-    res = requests.get(url).text
-    return (res)
+    try:
+        res = requests.get(url).text
+        return (res)
+    except requests.RequestException as e:
+        return ("")
