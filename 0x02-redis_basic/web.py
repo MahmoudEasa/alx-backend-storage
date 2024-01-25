@@ -8,6 +8,7 @@ from functools import wraps
 from typing import Callable
 
 r = redis.Redis()
+r.flushdb()
 
 
 def cache_count(method: Callable) -> Callable:
@@ -16,14 +17,12 @@ def cache_count(method: Callable) -> Callable:
     def wrapper(url: str):
         """ Wrapper Function """
         count_key = f"count:{url}"
-        cached = r.get(url)
-
-        if cached:
-            r.incr(count_key)
-            return (cached.decode('utf-8'))
-
+        cached = r.get(count_key)
         content = method(url)
-        r.setex(url, 10, content)
+
+        if not cached:
+            r.setex(url, 10, content)
+
         r.incr(count_key)
         return (content)
 
