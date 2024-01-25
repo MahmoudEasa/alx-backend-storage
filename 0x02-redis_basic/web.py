@@ -24,13 +24,10 @@ def cache_count(method: Callable) -> Callable:
             r.incr(count_key)
             return (cached.decode('utf-8'))
 
-        try:
-            content = method(url)
-            r.setex(cached_url, 10, content)
-            r.set(count_key, 0)
-            return (content)
-        except requests.RequestException as e:
-            return ("")
+        content = method(url)
+        r.setex(cached_url, 10, content)
+        r.set(count_key, 0)
+        return (content)
 
     return (wrapper)
 
