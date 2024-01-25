@@ -43,19 +43,20 @@ def get_page(url: str) -> str:
         return ("")
 
 
-url = "http://slowwly.robertomurray.co.uk"
-get_page(url)
-get_page(url)
-get_page(url)
-get_page(url)
-get_page(url)
-get_page(url)
-get_page(url)
-get_page(url)
-get_page(url)
-print(r.get(f"count:{url}"))
-print(r.get(f"cached:{url}"))
+if __name__ == "__main__":
+    url = "http://slowwly.robertomurray.co.uk"
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    get_page(url)
+    print(r.get(f"count:{url}"))
+    print(r.get(f"cached:{url}"))
 
-time.sleep(11)
-print(r.get(f"count:{url}"))
-print(r.get(f"cached:{url}"))
+    time.sleep(11)
+    print(r.get(f"count:{url}"))
+    print(r.get(f"cached:{url}"))
