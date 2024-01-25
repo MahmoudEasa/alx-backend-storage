@@ -27,11 +27,10 @@ def cache_count(method: Callable) -> Callable:
         try:
             content = method(url)
             r.setex(cached_url, 10, content)
-            r.incr(count_key)
+            r.set(count_key, 0)
+            return (content)
         except requests.RequestException as e:
             return ("")
-
-        return (content)
 
     return (wrapper)
 
