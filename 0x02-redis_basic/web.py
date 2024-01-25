@@ -8,7 +8,6 @@ from functools import wraps
 from typing import Callable
 
 r = redis.Redis()
-r.flushdb()
 
 
 def cache_count(method: Callable) -> Callable:
